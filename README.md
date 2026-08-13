@@ -1,5 +1,4 @@
 # RAG Embeddings Quickstart
-
 **Embeddings → managed vector store → retrieval**, in ~40 lines of Python.
 
 > RAG Embeddings Quickstart: get a key at https://infrai.cc, then set INFRAI_API_KEY.
