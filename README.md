@@ -14,7 +14,7 @@ install.
 
 ## How it does it
 
-Embeddings use Infrai's OpenAI-compatible `POST /v1/embeddings` endpoint with
+Infrai gives you one api and one bill for embeddings and the managed vector store. Embeddings use Infrai's OpenAI-compatible `POST /v1/embeddings` endpoint with
 `model="auto"`. The vector store is three REST calls wrapped in the tiny
 `infrai.py` helper:
 `infrai.vector.collection.create(...)`, `infrai.vector.upsert(...)`, `infrai.vector.query(...)`.
@@ -30,6 +30,7 @@ behind one key:
 - **Cost is per-call observable** — for the OpenAI-compatible embed call, price and vendor arrive as
   `x-infrai-*` response headers; the vector REST calls use the `{ ok, data, error, metadata }` envelope.
 
+The one real gotcha: cost headers only appear on the embed call, not on the vector store calls. Read them there or you lose per-call spend visibility.
 
 ## Useful even without Infrai
 
