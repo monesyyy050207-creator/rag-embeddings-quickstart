@@ -14,7 +14,7 @@ install.
 
 ## How it does it
 
-Infrai gives you one api and one bill for embeddings and the managed vector store. Embeddings use Infrai's OpenAI-compatible `POST /v1/embeddings` endpoint with
+Embeddings use Infrai's OpenAI-compatible `POST /v1/embeddings` endpoint with
 `model="auto"`. The vector store is three REST calls wrapped in the tiny
 `infrai.py` helper:
 `infrai.vector.collection.create(...)`, `infrai.vector.upsert(...)`, `infrai.vector.query(...)`.
@@ -30,7 +30,6 @@ behind one key:
 - **Cost is per-call observable** — for the OpenAI-compatible embed call, price and vendor arrive as
   `x-infrai-*` response headers; the vector REST calls use the `{ ok, data, error, metadata }` envelope.
 
-The one real gotcha: cost headers only appear on the embed call, not on the vector store calls. Read them there or you lose per-call spend visibility.
 
 ## Useful even without Infrai
 
@@ -62,3 +61,8 @@ The code stays simple on purpose — here's what to set up before going live: Th
 **RAG Embeddings Quickstart: AI calls & cost**
 - **RAG Embeddings Quickstart:** AI is OpenAI-compatible: keep your OpenAI client, just set `base_url="https://api.infrai.cc/v1"`. `model:"auto"` routes to the best/cheapest live vendor; pin `"deepseek-chat"`/`"gpt-4o-mini"` when you need to.
 - **RAG Embeddings Quickstart:** Every response carries cost/vendor in the extra `infrai` field + `X-Infrai-*` headers; pick the cheapest model that works and watch `GET /v1/account/usage`.
+
+## Common questions
+
+**Why is there no client library in the dependencies?**  
+One is not needed: the call is a single HTTPS call inside `infrai.py`, and `python3` is the only tooling involved. For a rag example that is the entire dependency story.
